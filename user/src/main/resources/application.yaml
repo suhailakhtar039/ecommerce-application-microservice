@@ -1,9 +1,6 @@
 spring:
   application:
     name: user-service
-  h2:
-    console:
-      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/userdb
     username: suhail
