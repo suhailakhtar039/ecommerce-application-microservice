@@ -1,9 +1,10 @@
 package com.ecommerce.product.service;
 
-import com.ecom.dto.ProductRequest;
-import com.ecom.dto.ProductResponse;
-import com.ecom.model.Product;
-import com.ecom.repository.ProductRepository;
+
+import com.ecommerce.product.dto.ProductRequest;
+import com.ecommerce.product.dto.ProductResponse;
+import com.ecommerce.product.model.Product;
+import com.ecommerce.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
