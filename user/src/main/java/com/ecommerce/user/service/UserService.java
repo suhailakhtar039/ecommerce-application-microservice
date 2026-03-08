@@ -81,6 +81,7 @@ public class UserService {
             address.setStreet(userRequest.getAddress().getStreet());
             address.setState(userRequest.getAddress().getState());
             address.setCountry(userRequest.getAddress().getCountry());
+            user.setAddress(address);
         }
     }
 
