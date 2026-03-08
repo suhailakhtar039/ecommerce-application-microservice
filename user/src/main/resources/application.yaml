@@ -5,12 +5,15 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:postgresql://localhost:5432/userdb
+    username: suhail
+    password: suhail
   jpa:
+    database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto:
-        create
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: 8082
