@@ -21,8 +21,8 @@ public class OrderService {
     //    private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
-    public Optional<OrderResponse> createOrder(String userId) {
-        List<CartItem> cartItems = cartService.getCart(userId);
+    public Optional<OrderResponse> createOrder(Long userId) {
+        List<CartItem> cartItems = cartService.getCart(String.valueOf(userId));
         if (cartItems.isEmpty()) {
             return Optional.empty();
         }
@@ -46,7 +46,7 @@ public class OrderService {
         List<OrderItem> orderItems = cartItems.stream()
                 .map(item -> new OrderItem(
                         null,
-                        item.getProductId(),
+                        Long.valueOf(item.getProductId()),
                         item.getQuantity(),
                         item.getPrice(),
                         order
@@ -57,7 +57,7 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         // Clear the cart
-        cartService.clearCart(userId);
+        cartService.clearCart(String.valueOf(userId));
         return Optional.of(mapToOrderResponse(savedOrder));
     }
 
@@ -69,7 +69,7 @@ public class OrderService {
                 savedOrder.getItems().stream()
                         .map(orderItem -> new OrderItemDTO(
                                 orderItem.getId(),
-                                orderItem.getProductId(),
+                                String.valueOf(orderItem.getProductId()),
                                 orderItem.getQuantity(),
                                 orderItem.getPrice(),
                                 orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity()))
