@@ -50,8 +50,8 @@ public class CartService {
         return true;
     }
 
-    public boolean deleteItemFromCart(String userId, Long productId) {
-        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, String.valueOf(productId));
+    public boolean deleteItemFromCart(String userId, String productId) {
+        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
 
         if (cartItem != null) {
             cartItemRepository.delete(cartItem);
