@@ -28,17 +28,19 @@ public class UserService {
     }
 
     public void addUser(UserRequest userRequest) {
+        System.out.println("Saving user to MongoDB: " + userRequest.getEmail());
         User user = new User();
         updateUserFromRequest(user, userRequest);
         userRepository.save(user);
+        System.out.println("Saved user id: " + user.getId());
     }
 
-    public Optional<UserResponse> fetchUser(Long id) {
+    public Optional<UserResponse> fetchUser(String id) {
         return userRepository.findById(id)
                 .map(this::mapToUserResponse);
     }
 
-    public boolean updateUser(Long id, UserRequest userRequest) {
+    public boolean updateUser(String id, UserRequest userRequest) {
         return userRepository.findById(id)
                 .map(existingUser -> {
                     updateUserFromRequest(existingUser, userRequest);
