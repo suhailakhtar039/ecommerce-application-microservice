@@ -1,17 +1,29 @@
 spring:
   application:
     name: user-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/userdb
-    username: suhail
-    password: suhail
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: userdb
+      auto-index-creation: true
+#      auto-indexed-creation: true
+#      database: userdb
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/userdb
+#    username: suhail
+#    password: suhail
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.mongodb.driver: INFO
 server:
   port: 8082
 
