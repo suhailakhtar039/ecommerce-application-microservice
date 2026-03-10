@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 //@AllArgsConstructor
-@Document(collation = "users")
+@Document(collection = "users")
 public class User {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
