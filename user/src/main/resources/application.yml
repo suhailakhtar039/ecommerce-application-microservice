@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: user-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/userdb1
+      host: localhost
+      port: 27017
+      database: userdb1
+      auto-index-creation: true
+
+server:
+  port: 8082
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.mongodb.driver: INFO
+#spring:
+#  application:
+#    name: user-service
+#
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      database: userdb
+#      auto-index-creation: true
+##      auto-indexed-creation: true
+##      database: userdb
+##  datasource:
+##    url: jdbc:postgresql://localhost:5432/userdb
+##    username: suhail
+##    password: suhail
+##  jpa:
+##    database: POSTGRESQL
+##    show-sql: true
+##    hibernate:
+##      ddl-auto: update
+##    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#logging:
+#  level:
+#    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+#    org.mongodb.driver: INFO
+#server:
+#  port: 8082
+#
+#
