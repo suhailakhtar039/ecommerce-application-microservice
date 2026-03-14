@@ -1,5 +1,5 @@
 spring:
   application:
-    name: config-demo
+    name: configdemo
   profiles:
     active: prod
