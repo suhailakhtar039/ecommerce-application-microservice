@@ -4,4 +4,10 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   profiles:
-    active: dev
+    active: prod
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
