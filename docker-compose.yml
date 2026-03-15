@@ -5,6 +5,7 @@ services:
     environment:
       POSTGRES_USER: suhail
       POSTGRES_PASSWORD: suhail
+      POSTGRES_DB: product
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -30,6 +31,33 @@ services:
       - postgres
     restart: unless-stopped
 
+  mongodb:
+    container_name: mongodb_container
+    image: mongo:7
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: suhail
+      MONGO_INITDB_ROOT_PASSWORD: suhail
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "27018:27017"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  mongo-express:
+    container_name: mongo_express_container
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: suhail
+      ME_CONFIG_MONGODB_ADMINPASSWORD: suhail
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - "8085:8081"
+    networks:
+      - postgres
+    restart: unless-stopped
+
 networks:
   postgres:
     driver: bridge
@@ -37,3 +65,4 @@ networks:
 volumes:
   postgres:
   pgadmin:
+  mongodb:
