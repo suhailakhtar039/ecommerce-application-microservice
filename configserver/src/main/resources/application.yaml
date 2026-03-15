@@ -1,13 +1,24 @@
 spring:
   application:
     name: configserver
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   profiles:
     active: native
   cloud:
     config:
       server:
         native:
-          search-locations: classpath:/config
+          search-locations: file:///C:\Users\Suhail Akhtar\OneDrive\Desktop\project\Spring Boot\ecommerce\configserver\src\main\resources\config
 
 server:
   port: 8888
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
