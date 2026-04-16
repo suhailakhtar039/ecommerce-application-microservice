@@ -11,3 +11,7 @@ logging:
     com.ecommerce.user: TRACE
   file:
     name: logs/app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 5MB
+      max-history: 7
