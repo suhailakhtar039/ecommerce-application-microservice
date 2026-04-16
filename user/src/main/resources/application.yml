@@ -9,3 +9,5 @@ logging:
   level:
     root: INFO
     com.ecommerce.user: TRACE
+  file:
+    name: logs/app.log
