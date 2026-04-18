@@ -11,7 +11,7 @@ services:
       - 7946
       - 9095
     volumes:
-      - ./loki-config.yaml:/etc/loki/config.yaml
+      - ./logging/loki-config.yaml:/etc/loki/config.yaml
     depends_on:
       - minio
     healthcheck:
@@ -32,7 +32,7 @@ services:
       - 7946
       - 9095
     volumes:
-      - ./loki-config.yaml:/etc/loki/config.yaml
+      - ./logging/loki-config.yaml:/etc/loki/config.yaml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
       interval: 10s
@@ -46,7 +46,7 @@ services:
   alloy:
     image: grafana/alloy:latest
     volumes:
-      - ./alloy-local-config.yaml:/etc/alloy/config.alloy:ro
+      - ./logging/alloy-local-config.yaml:/etc/alloy/config.alloy:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - ../logs:/logs-parent:ro
     command:  run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
@@ -67,7 +67,7 @@ services:
         mkdir -p /data/loki-ruler && \
         minio server /data
     environment:
-      - MINIO_ROOT_USER=loki
+      - MINIO_ROOT_USERss=loki
       - MINIO_ROOT_PASSWORD=supersecret
       - MINIO_PROMETHEUS_AUTH_TYPE=public
       - MINIO_UPDATE=off
@@ -80,6 +80,16 @@ services:
       interval: 15s
       timeout: 20s
       retries: 5
+    networks:
+      - loki
+
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - loki
 
@@ -116,13 +126,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
     networks:
       - loki
 
   backend:
     image: grafana/loki:latest
     volumes:
-      - ./loki-config.yaml:/etc/loki/config.yaml
+      - ./logging/loki-config.yaml:/etc/loki/config.yaml
     ports:
       - "3100"
       - "7946"
