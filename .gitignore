@@ -15,5 +15,6 @@ target/
 .DS_Store
 Thumbs.db
 
-#
+# Graffana & Prometheus
 evaluate-loki/.data/
+evaluate-prometheus/.data/
