@@ -12,4 +12,4 @@ datasources:
     jsonData:
       httpHeaderName1: "X-Scope-OrgID"
     secureJsonData:
-       httpHeaderValue1: "tenant1"
+      httpHeaderValue1: "tenant1"
