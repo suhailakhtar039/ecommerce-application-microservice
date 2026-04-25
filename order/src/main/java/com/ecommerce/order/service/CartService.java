@@ -1,10 +1,13 @@
 package com.ecommerce.order.service;
 
 import com.ecommerce.order.clients.ProductServiceClient;
+import com.ecommerce.order.clients.UserServiceClient;
 import com.ecommerce.order.dto.CartItemRequest;
 import com.ecommerce.order.dto.ProductResponse;
+import com.ecommerce.order.dto.UserResponse;
 import com.ecommerce.order.model.CartItem;
 import com.ecommerce.order.repository.CartItemRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,37 +23,38 @@ public class CartService {
     //    private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
     private final ProductServiceClient productServiceClient;
-//    private final UserRepository userRepository;
+    private final UserServiceClient userServiceClient;
 
+    //    private final UserRepository userRepository;
+    @CircuitBreaker(name = "productService")
     public boolean addToCart(String userId, CartItemRequest request) {
         // Look for product
         ProductResponse productResponse = productServiceClient.getProductDetails(request.getProductId());
-        if (productResponse == null)
+        if (productResponse == null || productResponse.getStockQuantity() < request.getQuantity())
             return false;
-//
-        if (productResponse.getStockQuantity() < request.getQuantity())
+
+        UserResponse userResponse = userServiceClient.getUserDetails(userId);
+        if (userResponse == null)
             return false;
-//
-//        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
-//        if (userOpt.isEmpty())
-//            return false;
-//        User user = userOpt.get();
 
         CartItem existingCartItem = cartItemRepository.findByUserIdAndProductId(userId, request.getProductId());
         if (existingCartItem != null) {
+            // Update the quantity
             existingCartItem.setQuantity(existingCartItem.getQuantity() + request.getQuantity());
-            existingCartItem.setPrice(BigDecimal.valueOf(100.00));
+            existingCartItem.setPrice(BigDecimal.valueOf(1000.00));
             cartItemRepository.save(existingCartItem);
         } else {
+            // Create new cart item
             CartItem cartItem = new CartItem();
             cartItem.setUserId(Long.valueOf(userId));
             cartItem.setProductId(request.getProductId());
             cartItem.setQuantity(request.getQuantity());
-            cartItem.setPrice(BigDecimal.valueOf(100.00));
+            cartItem.setPrice(BigDecimal.valueOf(1000.00));
             cartItemRepository.save(cartItem);
         }
         return true;
     }
+
 
     public boolean deleteItemFromCart(String userId, String productId) {
         CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
@@ -68,5 +72,9 @@ public class CartService {
 
     public void clearCart(String userId) {
         cartItemRepository.deleteByUserId(userId);
+    }
+
+    public boolean productFallback(String userId, CartItemRequest request, Throwable ex) {
+        return false;
     }
 }
