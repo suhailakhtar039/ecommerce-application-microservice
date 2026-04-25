@@ -18,3 +18,5 @@ Thumbs.db
 # Graffana & Prometheus
 evaluate-loki/.data/
 evaluate-prometheus/.data/
+
+logs
