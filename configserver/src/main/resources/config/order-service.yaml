@@ -70,3 +70,6 @@ logging:
     rollingpolicy:
       max-file-size: 5MB
       max-history: 7
+
+app:
+  message: "Hello Order!"
