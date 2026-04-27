@@ -48,6 +48,12 @@ resilience4j:
       retryBreaker:
         maxAttempts: 5
         waitDuration: 500ms
+  ratelimiter:
+    instances:
+      retryBreaker:
+        timeout-duration: 0
+        limit-refresh-period: 4
+        limit-for-period: 2
 
 server:
   port: 8083
