@@ -79,3 +79,12 @@ logging:
 
 app:
   message: "Hello Order!"
+
+# rabbit mq setup and customization
+rabbitmq:
+  exchange:
+    name: order.exchange
+  queue:
+    name: order.queue
+  routing:
+    key: order.tracking
