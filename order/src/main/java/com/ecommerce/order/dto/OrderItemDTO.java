@@ -13,4 +13,8 @@ public class OrderItemDTO {
     private Integer quantity;
     private BigDecimal price;
     private BigDecimal subTotal;
+
+    public OrderItemDTO(Long id, Long productId, Integer quantity, BigDecimal price, BigDecimal multiply) {
+
+    }
 }
