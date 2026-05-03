@@ -27,4 +27,7 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
+    public OrderItem(Long id, String productId, Integer quantity, BigDecimal price, Order order) {
+    }
 }

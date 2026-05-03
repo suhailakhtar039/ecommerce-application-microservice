@@ -19,4 +19,7 @@ public class OrderCreatedEvent {
     private List<OrderItemDTO> items;
     private BigDecimal totalAmount;
     private LocalDateTime createdAt;
+
+    public OrderCreatedEvent(Long id, Long userId, OrderStatus status, List<OrderItemDTO> items, BigDecimal totalAmount, LocalDateTime createdAt) {
+    }
 }
