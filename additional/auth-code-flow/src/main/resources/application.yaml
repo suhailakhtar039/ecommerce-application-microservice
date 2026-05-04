@@ -1,14 +1,20 @@
 spring:
   application:
     name: auth-code-flow
+
   security:
     oauth2:
       client:
+
         registration:
           oauth2-authorization-code-flow:
             client-id: oauth2-authorization-code-flow
             client-secret: h9KlLp9XU67MdFsEoYVYs36vydl0wcnA
-            scope: openid, profile, roles, email
+            scope: openid, profile, email
             authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            provider: keycloak
+
+        provider:
+          keycloak:
             issuer-uri: http://localhost:8443/realms/oauth2-demo
-            redirect-uri: http://localhost:8080/login/oauth2/code/oauth2-authorization-code-flow
